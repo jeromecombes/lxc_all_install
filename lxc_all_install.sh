@@ -10,7 +10,7 @@ PASSWORD=$(head /dev/urandom|tr -dc "a-zA-Z0-9"|fold -w 10|head -n 1)
 lxc exec $VE -- timedatectl set-timezone Europe/Paris
 lxc exec $VE -- apt-get update
 lxc exec $VE -- apt-get upgrade -y
-lxc exec $VE -- apt-get install -y nginx mariadb-server mariadb-client php7.4-fpm
+lxc exec $VE -- apt-get install -y nginx mariadb-server mariadb-client php7.4-fpm unzip
 lxc exec $VE -- apt-get install -y php7.4-mysql php7.4-curl php7.4-dom php7.4-gd php7.4-intl php7.4-ldap php7.4-mbstring php7.4-xml php7.4-zip
 
 ## Setup nginx and PHP #
@@ -37,3 +37,13 @@ lxc exec $VE -- su --login $USER -c "echo '[client]' > ~/.my.cnf"
 lxc exec $VE -- su --login $USER -c "echo 'user = $USER' >> ~/.my.cnf"
 lxc exec $VE -- su --login $USER -c "echo 'password = $PASSWORD' >> ~/.my.cnf"
 lxc exec $VE -- su --login $USER -c "echo 'database = $DB' >> ~/.my.cnf"
+
+## COMPOSER ##
+lxc exec $VE -- php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+lxc exec $VE -- php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+lxc exec $VE -- php -r "unlink('composer-setup.php');"
+
+## GIT ##
+lxc file push data/.gitconfig $VE/home/$USER/.gitconfig
+lxc file push data/.gitconfig $VE/root/.gitconfig
+lxc exec $VE -- chown root: /root/.gitconfig

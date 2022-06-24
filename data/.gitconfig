@@ -1,0 +1,17 @@
+[core]
+	text = auto
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[user]
+	name = Jérôme Combes
+	email = jerome@planningbiblio.fr
+[alias]
+	ci = commit
+	ch = cherry-pick
+	co = checkout
+	st = status
+	br = branch
+[credential]
+	helper = store
