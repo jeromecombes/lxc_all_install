@@ -11,6 +11,7 @@ lxc exec $VE -- timedatectl set-timezone Europe/Paris
 lxc exec $VE -- apt-get update
 lxc exec $VE -- apt-get upgrade -y
 lxc exec $VE -- apt-get install -y nginx mariadb-server mariadb-client php7.4-fpm
+lxc exec $VE -- apt-get install -y php7.4-mysql php7.4-curl php7.4-dom php7.4-gd php7.4-intl php7.4-ldap php7.4-mbstring php7.4-xml php7.4-zip
 
 ## Setup nginx and PHP #
 lxc exec $VE -- su --login $USER -c "mkdir ~/$FOLDER"
